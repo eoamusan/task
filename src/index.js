@@ -3,11 +3,35 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
+import { Provider } from 'react-redux';
+import store, { history } from 'store';
+import { ToastContainer, toast, Slide } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.min.css'
+import { ConnectedRouter } from 'connected-react-router';
+
+const FontAwesomeCloseButton = ({ closeToast }) => (
+  <i
+    className="material-icons"
+    onClick={closeToast}
+  >
+    close
+  </i>
+);
 
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
+  <Provider store={store}>
+    <ConnectedRouter history={history}>
+      <>
+        <ToastContainer
+          closeButton={<FontAwesomeCloseButton />}
+          position={toast.POSITION.TOP_CENTER}
+          draggable={false}
+          transition={Slide}
+          toastClassName="notification-toast" />
+        <App />
+      </>
+    </ConnectedRouter>
+  </Provider>,
   document.getElementById('root')
 );
 
